@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     def customImage = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
-                    customImage.tag("latets")
+                    customImage.tag("latest")
                 }
             }
         }
