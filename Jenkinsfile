@@ -25,7 +25,7 @@ pipeline {
                 script {
                     docker.withRegistry("${REGISTRY_URL}", "${REGISTRY_CREDENTIALS}") {
                         docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()
-                        docker.image("${IMAGE_NAME}:latest").push
+                        docker.image("${IMAGE_NAME}:latest").push()
                     }
                 }
             }
