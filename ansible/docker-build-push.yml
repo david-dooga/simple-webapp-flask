@@ -1,0 +1,35 @@
+    ---
+- name: Build and push Docker Image
+  hosts: docker
+  become: true
+  
+  vars:
+    image_name: myapp
+    image_tag: latest
+    dockerhub_username: "{{ lookup('env' , 'DOCKERHUB_USERNAME') }}"
+    dockerhub_password: "{{ lookup('env' , 'DOCKERHUB_PASSWORD' )}}"
+
+  tasks:
+    - name: Install git
+      yum:
+        name: git
+        state: present
+    - name: Clone Application repo
+      git:
+        repo: https://github.com/david-dooga/simple-webapp-flask.git
+        dest: /opt/myapp
+        force: yes
+
+    - name: Login to Docker Hub
+      community.docker.docker_login:
+        username: "{{ dockerhub_username }}"
+        password: "{{ dockerhub_password }}"
+
+    - name: Build Docker Image
+      command: docker build -t {{ image_name }}:{{ image_tag }} /opt/myapp
+
+    - name: Tag Image
+      command: docker tag {{ image_name }}:{{ image_tag }} {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }}
+    - name: Push Image
+      command: docker push {{ dockerhub_username }}/{{ image_name }}:{{ image_tag }}
+
