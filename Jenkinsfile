@@ -27,7 +27,7 @@ pipeline {
                     // Executes the Ansible playbook with variables passed from Jenkins
                     ansiblePlaybook(
                         playbook: 'docker-build-push.yml',
-                        inventory: 'web,',
+                        inventory: 'localhost,',
                         extraVars: [
                             docker_user: "${DOCKER_HUB_USER}",
                             docker_password: "${DOCKER_PASS}",
