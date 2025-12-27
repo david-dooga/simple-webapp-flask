@@ -1,6 +1,6 @@
 ---
 - name: Build and Push Docker Image
-  hosts: web
+  hosts: local
   become: yes
   tasks:
     - name: Build Docker image from Dockerfile
@@ -22,7 +22,7 @@
         name: "{{ docker_user }}/{{ image_name }}"
         tag: "{{ image_tag }}"
         push: yes
-        source: web
+        source: local
 
     - name: Remove local image to save disk space
       community.docker.docker_image:
