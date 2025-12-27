@@ -68,10 +68,14 @@ pipeline {
         }
     }
     post {
-        success {
-            echo "Deployment successful! Visit http://${TARGET_IP}:4000 to see your app."
-        }
+    success {
+        slackSend color: 'good', message: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     }
+    failure {
+        slackSend color: 'danger', message: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+    }
+}
+
 }
 
 
