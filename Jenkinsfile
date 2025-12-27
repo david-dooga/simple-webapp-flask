@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Replace with your actual Docker Hub username
-        DOCKER_HUB_USER = 'daviddooga' 
+        DOCKER_HUB_USER = 'doogadavid' 
         IMAGE_NAME      = 'simple-webapp-flask'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
     }
