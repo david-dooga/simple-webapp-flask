@@ -18,6 +18,15 @@ pipeline {
             }
         }
 
+	stage('Run Unit Tests') {
+   	    steps {
+        	// Install pytest and run it
+       		 sh 'pip install pytest flask'
+ 	     	 sh 'pytest test_app.py'
+   		}
+	}
+	
+
         stage('Ansible Build & Push') {
             steps {
                 // Securely fetches credentials from Jenkins and masks them in logs
