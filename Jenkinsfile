@@ -21,8 +21,17 @@ pipeline {
 	stage('Run Unit Tests') {
    	    steps {
         	// Install pytest and run it
-       		 sh 'pip install pytest flask'
- 	     	 sh 'pytest test_app.py'
+		sh '''
+   
+   	         python3 -m venv venv
+           
+        	 . venv/bin/activate
+            
+           	 pip install --upgrade pip
+           	 pip install pytest flask
+            
+           	 python3 -m pytest test_app.py
+       		 '''
    		}
 	}
 	
@@ -75,6 +84,7 @@ pipeline {
         slackSend color: 'danger', message: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     }
 }
+
 
 }
 
