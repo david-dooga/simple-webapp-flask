@@ -6,6 +6,7 @@ pipeline {
         DOCKER_HUB_USER = 'doogadavid' 
         IMAGE_NAME      = 'simple-webapp-flask'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
+	TARGET_IP       = '34.201.30.208'
     }
 
     stages {
@@ -39,6 +40,29 @@ pipeline {
                 }
             }
         }
+
+	stage('Deploy to Production') {
+            steps {
+                // Using the SSH key you stored in Jenkins to log into the remote server
+                ansiblePlaybook(
+                    playbook: 'deploy.yml',
+                    inventory: "${TARGET_IP},",
+                    credentialsId: 'deployment-ssh-key',
+                    colorized: true,
+                    extraVars: [
+                        docker_user: "${DOCKER_HUB_USER}",
+                        image_name: "${IMAGE_NAME}",
+                        image_tag: "${IMAGE_TAG}"
+                    ]
+                )
+            }
+        }
+    }
+    post {
+        success {
+            echo "Deployment successful! Visit http://${TARGET_IP}:4000 to see your app."
+        }
     }
 }
+
 
