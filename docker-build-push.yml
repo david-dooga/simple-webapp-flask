@@ -1,7 +1,7 @@
 ---
 - name: Build and Push Docker Image
-  hosts: localhost  
-  connection: local
+  hosts: all  
+  become: yes
   tasks:
     - name: Build Docker image from Dockerfile
       community.docker.docker_image:

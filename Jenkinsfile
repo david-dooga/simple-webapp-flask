@@ -6,7 +6,7 @@ pipeline {
         DOCKER_HUB_USER = 'doogadavid' 
         IMAGE_NAME      = 'simple-webapp-flask'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
-	TARGET_IP       = '34.201.30.208'
+	TARGET_IP       = '3.216.78.33'
     }
 
     stages {
@@ -46,7 +46,7 @@ pipeline {
                     // Executes the Ansible playbook with variables passed from Jenkins
                     ansiblePlaybook(
                         playbook: 'docker-build-push.yml',
-                        inventory: 'localhost,',
+                        inventory: '${TARGET_IP},',
                         extraVars: [
                             docker_user: "${DOCKER_HUB_USER}",
                             docker_password: "${DOCKER_PASS}",
