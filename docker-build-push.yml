@@ -22,7 +22,7 @@
         name: "{{ docker_user }}/{{ image_name }}"
         tag: "{{ image_tag }}"
         push: yes
-        source: localhost
+        source: local
 
     - name: Remove local image to save disk space
       community.docker.docker_image:
