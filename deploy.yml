@@ -22,7 +22,7 @@
         state: started
         restart_policy: always
         published_ports:
-          - "4000:5000"
+          - "4000:8080"
 
     - name: Wait for application to be ready (Local Check)
       ansible.builtin.uri:
